@@ -4,3 +4,4 @@ __pycache__/*
 Wyklady/*
 exdata/bbob_results/*
 exdata/ppdata/*
+npz/*
