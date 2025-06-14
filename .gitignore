@@ -5,3 +5,5 @@ Wyklady/*
 exdata/bbob_results/*
 exdata/ppdata/*
 npz/*
+
+!npz/.gitkeep
