@@ -2,4 +2,5 @@
 .idea/*
 __pycache__/*
 Wyklady/*
-exdata/*
+exdata/bbob_results/*
+exdata/ppdata/*
