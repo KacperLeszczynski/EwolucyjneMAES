@@ -5,214 +5,290 @@ Empirical cumulative distribution of simulated (bootstrapped)
              targets $10^{[-8..2]}$ in dimension #1.
 }
 \providecommand{\cocoversion}{{\scriptsize\sffamily{}\color{Gray}Data produced with COCO v2.7.3}}
-\providecommand{\numofalgs}{1}
-\providecommand{\algname}{bbob results-0001{}}
-\providecommand{\algfolder}{bbob_results-0001_060420h3345/}
-\providecommand{\bbobecdfcaptionallgroups}[1]{
-Empirical cumulative distribution of simulated (bootstrapped)
-             runtimes, measured in number of $f$-evaluations,
-             divided by dimension (FEvals/DIM) for the $51$ 
-             targets $10^{[-8..2]}$ for all function groups and all 
-             dimensions. The aggregation over all 24 
-             functions is shown in the last plot.
+\providecommand{\numofalgs}{6}
+\providecommand{\bbobECDFslegend}[1]{
+Bootstrapped empirical cumulative distribution of the number of $f$-evaluations divided by dimension (FEvals/DIM) for $51$ targets with target precision in $10^{[-8..2]}$ for all functions and subgroups in #1-D. As reference algorithm, the best algorithm from BBOB 2009 is shown as light thick line with diamond markers.
 }
-\providecommand{\bbobecdfcaptionsinglefcts}[2]{
-Empirical cumulative distribution of simulated (bootstrapped) runtimes in number
-             of $f$-evaluations divided by dimension (FEvals/DIM) for the 
-             $51$ targets $10^{[-8..2]}$
-             for functions $f_{#1}$ to $f_{#2}$ and all dimensions. 
+\providecommand{\bbobppfigslegend}[1]{
+Expected running time (\ERT\ in number of $f$-evaluations
+                    as $\log_{10}$ value), divided by dimension for target function value $10^{-8}$
+                    versus dimension. Slanted grid lines indicate quadratic scaling with the dimension. Different symbols correspond to different algorithms given in the legend of #1. Light symbols give the maximum number of evaluations from the longest trial divided by dimension. Black stars (if present) indicate a better result compared to all other algorithms with $p<0.01$ and Bonferroni correction number of dimensions (six).  
+Legend: 
+{\color{CornflowerBlue}$\circ$}: \algorithmA
+, {{}$\diamondsuit$}: \algorithmB
+, {\color{Green}$\star$}: \algorithmC
+, {\color{red}+}: \algorithmD
+, {\color{brown}$\triangledown$}: \algorithmE
+, {{}x}: \algorithmF
 }
-\providecommand{\bbobpptablecaption}[1]{
-%
-        Expected runtime (\ERT\ in number of $f$-evaluations) divided by the \ERT\ of the best algorithm from BBOB 2009 in #1. This \ERT\
-        ratio and, in braces as dispersion measure, the half difference between 90 and
-        10\%-tile of (bootstrapped) run lengths appear in the second row of each cell,  
-        the best \ERT\
-        %
-        (preceded by the target \Df-value in \textit{italics}) in the first. 
-        \#succ is the number of trials that reached the target value of the last column.
-        %
-        The median number of conducted evaluations is additionally given in 
-        \textit{italics}, if the target in the last column was never reached. 
-        \textbf{Bold} entries are better than the reference algorithm
-        the best algorithm from BBOB 2009 with a $p$-value of at least $0.05$ or $10^{-k}$
-        where $k$ is the number following the $\downarrow$ symbol (computed
-        in the rank-sum test with Bonferroni correction by the number of
-        functions 24).
-        
-}
-\providecommand{\bbobppfigdimlegend}[1]{
-%
-        Scaling of runtime with dimension to reach certain target values \Df.
-        Lines: expected runtime (\ERT);
-        Cross (+): median runtime of successful runs to reach the most difficult
-        target that was reached at least once (but not always);
-        Cross ({\color{red}$\times$}): maximum number of
-        $f$-evaluations in any trial. Notched boxes: interquartile range with median of simulated runs; 
-        All values are divided by dimension and  
-        plotted as $\log_{10}$ values versus dimension. %
-        %
-        Shown is the \ERT\ for fixed target precision values of $10^k$ with $k$ given
-        in the legend.
-        Numbers above \ERT-symbols (if appearing) indicate the number of trials
-        reaching the respective target. The light thick line with diamonds indicates the best algorithm from BBOB 2009 for the most difficult target.  Horizontal lines mean linear scaling, slanted
-        grid lines depict quadratic scaling.
-}
-\providecommand{\bbobpprldistrlegend}[1]{
-%
-         Empirical cumulative distribution functions (ECDF), plotting the fraction of
-         trials with an outcome not larger than the respective value on the $x$-axis.
-         #1%
-         Left subplots: ECDF of the number of $f$-evaluations  divided by search space dimension $D$,
-         to fall below $\fopt+\Df$ with $\Df=10^{k}$, where $k$ is the first value in the legend.
-         The thick red line represents the most difficult target value $\fopt+ 10^{-8}$. %
-         Legends indicate for each target the number of functions that were solved in at
-         least one trial within the displayed budget.
-         Right subplots: ECDF of the best achieved $\Df$
-         for running times of $0.5D, 1.2D, 3D, 10D, 100D, 1000D,\dots$ $f$-evaluations (from right to left cycling cyan-magenta-black\dots) and final $\Df$-value (red),
-         where \Df and \textsf{Df} denote the difference to the optimal function value. 
-         Light brown lines in the background show ECDFs for the most difficult target of all
-            algorithms benchmarked during BBOB-2009.
-}
-\providecommand{\bbobloglossfigurecaption}[1]{
-%
-        \ERT\ loss ratios (see Figure~\ref{tab:ERTloss} for details).
+% define some COCO/dvipsnames colors because
+% ACM style does not allow to use them directly
+\definecolor{NavyBlue}{HTML}{000080}
+\definecolor{Magenta}{HTML}{FF00FF}
+\definecolor{Orange}{HTML}{FFA500}
+\definecolor{CornflowerBlue}{HTML}{6495ED}
+\definecolor{YellowGreen}{HTML}{9ACD32}
+\definecolor{Gray}{HTML}{BEBEBE}
+\definecolor{Yellow}{HTML}{FFFF00}
+\definecolor{GreenYellow}{HTML}{ADFF2F}
+\definecolor{ForestGreen}{HTML}{228B22}
+\definecolor{Lavender}{HTML}{FFC0CB}
+\definecolor{SkyBlue}{HTML}{87CEEB}
+\definecolor{NavyBlue}{HTML}{000080}
+\definecolor{Goldenrod}{HTML}{DDF700}
+\definecolor{VioletRed}{HTML}{D02090}
+\definecolor{CornflowerBlue}{HTML}{6495ED}
+\definecolor{LimeGreen}{HTML}{32CD32}
 
-        Each cross ({\color{blue}$+$}) represents a single function, the line
-        is the geometric mean.
-        
+\providecommand{\pptablesfooter}{
+\end{tabularx}
 }
-\providecommand{\bbobloglosstablecaption}[1]{
-%
-        \ERT\ loss ratio versus the budget in number of $f$-evaluations
-        divided by dimension.
-        For each given budget \FEvals, the target value \ftarget\ is computed
-        as the best target $f$-value reached within the
-        budget by the given algorithm.
-        Shown is then the \ERT\ to reach \ftarget\ for the given algorithm
-        or the budget, if the best algorithm from BBOB 2009
-        reached a better target within the budget,
-        divided by the \ERT\ of the best algorithm from BBOB 2009 to reach \ftarget.
-        Line: geometric mean. Box-Whisker error bar: 25-75\%-ile with median
-        (box), 10-90\%-ile (caps), and minimum and maximum \ERT\ loss ratio
-        (points). The vertical line gives the maximal number of function evaluations
-        in a single trial in this function subset. See also
-        Figure~\ref{fig:ERTlogloss} for results on each function subgroup.
-        
+\providecommand{\pptablesheader}{
+\begin{tabularx}{1.0\textwidth}{@{}c@{}|*{7}{@{}r@{}X@{}}|@{}r@{}@{}l@{}}
+$\Delta f_\mathrm{opt}$ & \multicolumn{2}{@{\,}l@{\,}}{1e1} & \multicolumn{2}{@{\,}l@{\,}}{1e0} & \multicolumn{2}{@{\,}l@{\,}}{1e-1} & \multicolumn{2}{@{\,}l@{\,}}{1e-2} & \multicolumn{2}{@{\,}l@{\,}}{1e-3} & \multicolumn{2}{@{\,}l@{\,}}{1e-5} & \multicolumn{2}{@{\,}l@{\,}}{1e-7} & \multicolumn{2}{|@{}l@{}}{\#succ}\\\hline
 }
-\providecommand{\pptablefooter}{
-\end{tabular}
+\providecommand{\ntables}{7}
+\providecommand{\pptablesfooter}{
+\end{tabularx}
 }
-\providecommand{\pptableheader}{
-\begin{tabular}{@{}c@{}|*{7}{@{}r@{}@{}l@{}}|@{}r@{}@{}l@{}}
-$\Delta f$ & \multicolumn{2}{c}{1e+1} & \multicolumn{2}{c}{1e+0} & \multicolumn{2}{c}{1e-1} & \multicolumn{2}{c}{1e-2} & \multicolumn{2}{c}{1e-3} & \multicolumn{2}{c}{1e-5} & \multicolumn{2}{c}{1e-7} & \multicolumn{2}{|@{}r@{}}{\#succ}\\\hline
+\providecommand{\pptablesheader}{
+\begin{tabularx}{1.0\textwidth}{@{}c@{}|*{7}{@{}r@{}X@{}}|@{}r@{}@{}l@{}}
+$\Delta f_\mathrm{opt}$ & \multicolumn{2}{@{\,}l@{\,}}{1e1} & \multicolumn{2}{@{\,}l@{\,}}{1e0} & \multicolumn{2}{@{\,}l@{\,}}{1e-1} & \multicolumn{2}{@{\,}l@{\,}}{1e-2} & \multicolumn{2}{@{\,}l@{\,}}{1e-3} & \multicolumn{2}{@{\,}l@{\,}}{1e-5} & \multicolumn{2}{@{\,}l@{\,}}{1e-7} & \multicolumn{2}{|@{}l@{}}{\#succ}\\\hline
 }
-\providecommand{\bbobecdfcaptionsinglefunctionssingledim}[1]{
-Empirical cumulative distribution of simulated (bootstrapped)
-             runtimes, measured in number of $f$-evaluations,
-             divided by dimension (FEvals/DIM) for the $51$ 
-             targets $10^{[-8..2]}$ in dimension #1.
+\providecommand{\ntables}{7}
+\providecommand{\pptablesfooter}{
+\end{tabularx}
 }
-\providecommand{\cocoversion}{{\scriptsize\sffamily{}\color{Gray}Data produced with COCO v2.7.3}}
-\providecommand{\numofalgs}{1}
-\providecommand{\algname}{bbob results{}}
-\providecommand{\algfolder}{bbob_results_060420h0003/}
-\providecommand{\bbobecdfcaptionallgroups}[1]{
-Empirical cumulative distribution of simulated (bootstrapped)
-             runtimes, measured in number of $f$-evaluations,
-             divided by dimension (FEvals/DIM) for the $51$ 
-             targets $10^{[-8..2]}$ for all function groups and all 
-             dimensions. The aggregation over all 24 
-             functions is shown in the last plot.
+\providecommand{\pptablesheader}{
+\begin{tabularx}{1.0\textwidth}{@{}c@{}|*{7}{@{}r@{}X@{}}|@{}r@{}@{}l@{}}
+$\Delta f_\mathrm{opt}$ & \multicolumn{2}{@{\,}l@{\,}}{1e1} & \multicolumn{2}{@{\,}l@{\,}}{1e0} & \multicolumn{2}{@{\,}l@{\,}}{1e-1} & \multicolumn{2}{@{\,}l@{\,}}{1e-2} & \multicolumn{2}{@{\,}l@{\,}}{1e-3} & \multicolumn{2}{@{\,}l@{\,}}{1e-5} & \multicolumn{2}{@{\,}l@{\,}}{1e-7} & \multicolumn{2}{|@{}l@{}}{\#succ}\\\hline
 }
-\providecommand{\bbobecdfcaptionsinglefcts}[2]{
-Empirical cumulative distribution of simulated (bootstrapped) runtimes in number
-             of $f$-evaluations divided by dimension (FEvals/DIM) for the 
-             $51$ targets $10^{[-8..2]}$
-             for functions $f_{#1}$ to $f_{#2}$ and all dimensions. 
-}
-\providecommand{\bbobpptablecaption}[1]{
-%
-        Expected runtime (\ERT\ in number of $f$-evaluations) divided by the \ERT\ of the best algorithm from BBOB 2009 in #1. This \ERT\
-        ratio and, in braces as dispersion measure, the half difference between 90 and
-        10\%-tile of (bootstrapped) run lengths appear in the second row of each cell,  
-        the best \ERT\
+\providecommand{\algBtables}{\StrLeft{seed1-0002}{\ntables}}
+\providecommand{\algAtables}{\StrLeft{seed1-0001}{\ntables}}
+\providecommand{\ntables}{7}
+\providecommand{\bbobpptablesmanylegend}[1]{%
+        Expected runtime (\ERT\ in number of $f$-evaluations) divided by the respective best \ERT\ measured during BBOB-2009 (when finite) in
+        #1.
+        This \ERT\ ratio and, in braces as dispersion measure, the half difference between
+        10 and 90\%-tile of (bootstrapped) run lengths appear for each algorithm and 
         %
-        (preceded by the target \Df-value in \textit{italics}) in the first. 
-        \#succ is the number of trials that reached the target value of the last column.
+        target, the corresponding reference \ERT\
+        in the first row. The different target \Df-values are shown in the top row.
+        \#succ is the number of trials that reached the (final) target
+        $\fopt + 10^{-8}$.
         %
-        The median number of conducted evaluations is additionally given in 
-        \textit{italics}, if the target in the last column was never reached. 
-        \textbf{Bold} entries are better than the reference algorithm
-        the best algorithm from BBOB 2009 with a $p$-value of at least $0.05$ or $10^{-k}$
-        where $k$ is the number following the $\downarrow$ symbol (computed
-        in the rank-sum test with Bonferroni correction by the number of
-        functions 24).
-        
-}
-\providecommand{\bbobppfigdimlegend}[1]{
-%
-        Scaling of runtime with dimension to reach certain target values \Df.
-        Lines: expected runtime (\ERT);
-        Cross (+): median runtime of successful runs to reach the most difficult
-        target that was reached at least once (but not always);
-        Cross ({\color{red}$\times$}): maximum number of
-        $f$-evaluations in any trial. Notched boxes: interquartile range with median of simulated runs; 
-        All values are divided by dimension and  
-        plotted as $\log_{10}$ values versus dimension. %
-        %
-        Shown is the \ERT\ for fixed target precision values of $10^k$ with $k$ given
-        in the legend.
-        Numbers above \ERT-symbols (if appearing) indicate the number of trials
-        reaching the respective target. The light thick line with diamonds indicates the best algorithm from BBOB 2009 for the most difficult target.  Horizontal lines mean linear scaling, slanted
-        grid lines depict quadratic scaling.
-}
-\providecommand{\bbobpprldistrlegend}[1]{
-%
-         Empirical cumulative distribution functions (ECDF), plotting the fraction of
-         trials with an outcome not larger than the respective value on the $x$-axis.
-         #1%
-         Left subplots: ECDF of the number of $f$-evaluations  divided by search space dimension $D$,
-         to fall below $\fopt+\Df$ with $\Df=10^{k}$, where $k$ is the first value in the legend.
-         The thick red line represents the most difficult target value $\fopt+ 10^{-8}$. %
-         Legends indicate for each target the number of functions that were solved in at
-         least one trial within the displayed budget.
-         Right subplots: ECDF of the best achieved $\Df$
-         for running times of $0.5D, 1.2D, 3D, 10D, 100D, 1000D,\dots$ $f$-evaluations (from right to left cycling cyan-magenta-black\dots) and final $\Df$-value (red),
-         where \Df and \textsf{Df} denote the difference to the optimal function value. 
-         Light brown lines in the background show ECDFs for the most difficult target of all
-            algorithms benchmarked during BBOB-2009.
-}
-\providecommand{\bbobloglossfigurecaption}[1]{
-%
-        \ERT\ loss ratios (see Figure~\ref{tab:ERTloss} for details).
-
-        Each cross ({\color{blue}$+$}) represents a single function, the line
-        is the geometric mean.
-        
-}
-\providecommand{\bbobloglosstablecaption}[1]{
-%
-        \ERT\ loss ratio versus the budget in number of $f$-evaluations
-        divided by dimension.
-        For each given budget \FEvals, the target value \ftarget\ is computed
-        as the best target $f$-value reached within the
-        budget by the given algorithm.
-        Shown is then the \ERT\ to reach \ftarget\ for the given algorithm
-        or the budget, if the best algorithm from BBOB 2009
-        reached a better target within the budget,
-        divided by the \ERT\ of the best algorithm from BBOB 2009 to reach \ftarget.
-        Line: geometric mean. Box-Whisker error bar: 25-75\%-ile with median
-        (box), 10-90\%-ile (caps), and minimum and maximum \ERT\ loss ratio
-        (points). The vertical line gives the maximal number of function evaluations
-        in a single trial in this function subset. See also
-        Figure~\ref{fig:ERTlogloss} for results on each function subgroup.
-        
-}
-\providecommand{\pptablefooter}{
-\end{tabular}
-}
-\providecommand{\pptableheader}{
-\begin{tabular}{@{}c@{}|*{7}{@{}r@{}@{}l@{}}|@{}r@{}@{}l@{}}
-$\Delta f$ & \multicolumn{2}{c}{1e+1} & \multicolumn{2}{c}{1e+0} & \multicolumn{2}{c}{1e-1} & \multicolumn{2}{c}{1e-2} & \multicolumn{2}{c}{1e-3} & \multicolumn{2}{c}{1e-5} & \multicolumn{2}{c}{1e-7} & \multicolumn{2}{|@{}r@{}}{\#succ}\\\hline
-}
+        The median number of conducted function evaluations is additionally given in 
+        \textit{italics}, if the target in the last column was never reached.
+        The best entry is marked by a star when the largest $p$-value of pairwise
+        rank-sum tests with the other algorithms either obeys $0.01 < p \le 0.05$
+        or $10^{-k-1} < p \le 10^{-k}$ when the star is followed by the number $k$,
+        with Bonferroni correction by the number of functions (24). A $\uparrow$ signifies the number of trials that were worse than the ERT of the best algorithm from BBOB 2009 shown only when less than 10 percent were worse and the ERT was better. Best results are printed in bold.
+        }
+\providecommand{\algsfolder}{seed1_seed1_seed1_seed1_seed1_seed1_061022h4240/}
+\providecommand{\algorithmA}{seed1-0001}
+\providecommand{\algorithmB}{seed1-0001}
+\providecommand{\algorithmC}{seed1-0001}
+\providecommand{\algorithmD}{seed1-0002}
+\providecommand{\algorithmE}{seed1-0002}
+\providecommand{\algorithmF}{seed1-0002}
+\providecommand{\algorithmA}{f1}
+\providecommand{\algorithmB}{f1}
+\providecommand{\algorithmC}{f1}
+\providecommand{\algorithmD}{f1}
+\providecommand{\algorithmE}{f1}
+\providecommand{\algorithmF}{f1}
+\providecommand{\algorithmG}{f10}
+\providecommand{\algorithmH}{f10}
+\providecommand{\algorithmI}{f10}
+\providecommand{\algorithmJ}{f10}
+\providecommand{\algorithmK}{f10}
+\providecommand{\algorithmL}{f10}
+\providecommand{\algorithmM}{f11}
+\providecommand{\algorithmN}{f11}
+\providecommand{\algorithmO}{f11}
+\providecommand{\algorithmP}{f11}
+\providecommand{\algorithmQ}{f11}
+\providecommand{\algorithmR}{f11}
+\providecommand{\algorithmS}{f12}
+\providecommand{\algorithmT}{f12}
+\providecommand{\algorithmU}{f12}
+\providecommand{\algorithmV}{f12}
+\providecommand{\algorithmW}{f12}
+\providecommand{\algorithmX}{f12}
+\providecommand{\algorithmY}{f13}
+\providecommand{\algorithmZ}{f13}
+\providecommand{\algorithma}{f13}
+\providecommand{\algorithmb}{f13}
+\providecommand{\algorithmc}{f13}
+\providecommand{\algorithmd}{f13}
+\providecommand{\algorithme}{f14}
+\providecommand{\algorithmf}{f14}
+\providecommand{\algorithmg}{f14}
+\providecommand{\algorithmh}{f14}
+\providecommand{\algorithmi}{f14}
+\providecommand{\algorithmj}{f14}
+\providecommand{\algorithmk}{f15}
+\providecommand{\algorithml}{f15}
+\providecommand{\algorithmm}{f15}
+\providecommand{\algorithmn}{f15}
+\providecommand{\algorithmo}{f15}
+\providecommand{\algorithmp}{f15}
+\providecommand{\algorithmq}{f16}
+\providecommand{\algorithmr}{f16}
+\providecommand{\algorithms}{f16}
+\providecommand{\algorithmt}{f16}
+\providecommand{\algorithmu}{f16}
+\providecommand{\algorithmv}{f16}
+\providecommand{\algorithmw}{f17}
+\providecommand{\algorithmx}{f17}
+\providecommand{\algorithmy}{f17}
+\providecommand{\algorithmz}{f17}
+\providecommand{\algorithmAA}{f17}
+\providecommand{\algorithmAB}{f17}
+\providecommand{\algorithmAC}{f18}
+\providecommand{\algorithmAD}{f18}
+\providecommand{\algorithmAE}{f18}
+\providecommand{\algorithmAF}{f18}
+\providecommand{\algorithmAG}{f18}
+\providecommand{\algorithmAH}{f18}
+\providecommand{\algorithmAI}{f19}
+\providecommand{\algorithmAJ}{f19}
+\providecommand{\algorithmAK}{f19}
+\providecommand{\algorithmAL}{f19}
+\providecommand{\algorithmAM}{f19}
+\providecommand{\algorithmAN}{f19}
+\providecommand{\algorithmAO}{f2}
+\providecommand{\algorithmAP}{f2}
+\providecommand{\algorithmAQ}{f2}
+\providecommand{\algorithmAR}{f2}
+\providecommand{\algorithmAS}{f2}
+\providecommand{\algorithmAT}{f2}
+\providecommand{\algorithmAU}{f20}
+\providecommand{\algorithmAV}{f20}
+\providecommand{\algorithmAW}{f20}
+\providecommand{\algorithmAX}{f20}
+\providecommand{\algorithmAY}{f20}
+\providecommand{\algorithmAZ}{f20}
+\providecommand{\algorithmAa}{f21}
+\providecommand{\algorithmAb}{f21}
+\providecommand{\algorithmAc}{f21}
+\providecommand{\algorithmAd}{f21}
+\providecommand{\algorithmAe}{f21}
+\providecommand{\algorithmAf}{f21}
+\providecommand{\algorithmAg}{f22}
+\providecommand{\algorithmAh}{f22}
+\providecommand{\algorithmAi}{f22}
+\providecommand{\algorithmAj}{f22}
+\providecommand{\algorithmAk}{f22}
+\providecommand{\algorithmAl}{f22}
+\providecommand{\algorithmAm}{f23}
+\providecommand{\algorithmAn}{f23}
+\providecommand{\algorithmAo}{f23}
+\providecommand{\algorithmAp}{f23}
+\providecommand{\algorithmAq}{f23}
+\providecommand{\algorithmAr}{f23}
+\providecommand{\algorithmAs}{f24}
+\providecommand{\algorithmAt}{f24}
+\providecommand{\algorithmAu}{f24}
+\providecommand{\algorithmAv}{f24}
+\providecommand{\algorithmAw}{f24}
+\providecommand{\algorithmAx}{f24}
+\providecommand{\algorithmAy}{f3}
+\providecommand{\algorithmAz}{f3}
+\providecommand{\algorithmBA}{f3}
+\providecommand{\algorithmBB}{f3}
+\providecommand{\algorithmBC}{f3}
+\providecommand{\algorithmBD}{f3}
+\providecommand{\algorithmBE}{f4}
+\providecommand{\algorithmBF}{f4}
+\providecommand{\algorithmBG}{f4}
+\providecommand{\algorithmBH}{f4}
+\providecommand{\algorithmBI}{f4}
+\providecommand{\algorithmBJ}{f4}
+\providecommand{\algorithmBK}{f5}
+\providecommand{\algorithmBL}{f5}
+\providecommand{\algorithmBM}{f5}
+\providecommand{\algorithmBN}{f5}
+\providecommand{\algorithmBO}{f5}
+\providecommand{\algorithmBP}{f5}
+\providecommand{\algorithmBQ}{f6}
+\providecommand{\algorithmBR}{f6}
+\providecommand{\algorithmBS}{f6}
+\providecommand{\algorithmBT}{f6}
+\providecommand{\algorithmBU}{f6}
+\providecommand{\algorithmBV}{f6}
+\providecommand{\algorithmBW}{f7}
+\providecommand{\algorithmBX}{f7}
+\providecommand{\algorithmBY}{f7}
+\providecommand{\algorithmBZ}{f7}
+\providecommand{\algorithmBa}{f7}
+\providecommand{\algorithmBb}{f7}
+\providecommand{\algorithmBc}{f8}
+\providecommand{\algorithmBd}{f8}
+\providecommand{\algorithmBe}{f8}
+\providecommand{\algorithmBf}{f8}
+\providecommand{\algorithmBg}{f8}
+\providecommand{\algorithmBh}{f8}
+\providecommand{\algorithmBi}{f9}
+\providecommand{\algorithmBj}{f9}
+\providecommand{\algorithmBk}{f9}
+\providecommand{\algorithmBl}{f9}
+\providecommand{\algorithmBm}{f9}
+\providecommand{\algorithmBn}{f9}
+\providecommand{\algorithmA}{f1}
+\providecommand{\algorithmB}{f1}
+\providecommand{\algorithmC}{f1}
+\providecommand{\algorithmD}{f1}
+\providecommand{\algorithmE}{f1}
+\providecommand{\algorithmF}{f1}
+\providecommand{\algorithmG}{f10}
+\providecommand{\algorithmH}{f10}
+\providecommand{\algorithmI}{f10}
+\providecommand{\algorithmJ}{f10}
+\providecommand{\algorithmK}{f10}
+\providecommand{\algorithmL}{f10}
+\providecommand{\algorithmM}{f11}
+\providecommand{\algorithmN}{f11}
+\providecommand{\algorithmO}{f11}
+\providecommand{\algorithmP}{f11}
+\providecommand{\algorithmQ}{f11}
+\providecommand{\algorithmR}{f11}
+\providecommand{\algorithmS}{f12}
+\providecommand{\algorithmT}{f12}
+\providecommand{\algorithmU}{f12}
+\providecommand{\algorithmV}{f12}
+\providecommand{\algorithmW}{f12}
+\providecommand{\algorithmX}{f12}
+\providecommand{\algorithmY}{f13}
+\providecommand{\algorithmZ}{f13}
+\providecommand{\algorithma}{f13}
+\providecommand{\algorithmb}{f13}
+\providecommand{\algorithmc}{f13}
+\providecommand{\algorithmd}{f13}
+\providecommand{\algorithme}{f14}
+\providecommand{\algorithmf}{f14}
+\providecommand{\algorithmg}{f14}
+\providecommand{\algorithmh}{f14}
+\providecommand{\algorithmi}{f14}
+\providecommand{\algorithmj}{f14}
+\providecommand{\algorithmk}{f15}
+\providecommand{\algorithml}{f15}
+\providecommand{\algorithmm}{f15}
+\providecommand{\algorithmn}{f15}
+\providecommand{\algorithmo}{f15}
+\providecommand{\algorithmp}{f15}
+\providecommand{\algorithmq}{f16}
+\providecommand{\algorithmr}{f16}
+\providecommand{\algorithms}{f16}
+\providecommand{\algorithmt}{f16}
+\providecommand{\algorithmu}{f16}
+\providecommand{\algorithmv}{f16}
+\providecommand{\algorithmw}{f17}
+\providecommand{\algorithmx}{f17}
+\providecommand{\algorithmy}{f17}
+\providecommand{\algorithmz}{f17}
+\providecommand{\algorithmAA}{f17}
+\providecommand{\algorithmAB}{f17}
+\providecommand{\algorithmAC}{f18}
+\providecommand{\algorithmAD}{f18}
+\providecommand{\algorithmAE}{f18}

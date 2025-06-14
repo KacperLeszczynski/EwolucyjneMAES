@@ -12,11 +12,10 @@ from maes import MAES, MAESConfig
 class IPOPConfig:
     stall_generations: int = 50
     ipop_factor: int = 2
-    max_restarts: int | None = None  # None → unlimited until budget ends
+    max_restarts: int | None = None
 
 
 class IPOPMAES:
-    """Wrapper orchestrating MA‑ES restarts with IPOP."""
 
     def __init__(
         self,
@@ -35,7 +34,6 @@ class IPOPMAES:
         self.global_best_y = np.inf
         self.global_best_x = x0.copy()
 
-    # ------------- internal helpers -------------
     def _build_inner(self) -> None:
         new_cfg = MAESConfig(
             dim=self.base_cfg.dim,
@@ -47,7 +45,6 @@ class IPOPMAES:
         self._stall_counter = 0
         self._prev_best = np.inf
 
-    # ------------- public optimiser‑like API -------------
     def run(self, max_evals: int) -> Tuple[np.ndarray, float]:
         evals = 0
         while evals < max_evals:
@@ -56,7 +53,6 @@ class IPOPMAES:
             evals += len(fitness)
             self.es.tell(x, y, fitness)
 
-            # Track global best
             if self.es.best_y < self.global_best_y:
                 self.global_best_y = self.es.best_y
                 self.global_best_x = self.es.best_x.copy()
